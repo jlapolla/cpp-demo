@@ -5,7 +5,9 @@ BUILDDIR := build
 TARGETDIR := bin
 
 SRCEXT := cpp
-SOURCES := $(shell find src -type f -name *.$(SRCEXT))
+MAIN_SOURCES := $(shell find src -maxdepth 1 -type f -name *.$(SRCEXT))
+MAIN_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(MAIN_SOURCES))))
+SOURCES := $(shell find src -mindepth 2 -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
 CFLAGS := -std=c++14 -g -Wall
 
@@ -28,11 +30,13 @@ printvar:
 	$(info BUILDDIR = $(BUILDDIR))
 	$(info TARGETDIR = $(TARGETDIR))
 	$(info SRCEXT = $(SRCEXT))
+	$(info MAIN_SOURCES = $(MAIN_SOURCES))
+	$(info MAIN_OBJECTS = $(MAIN_OBJECTS))
 	$(info SOURCES = $(SOURCES))
 	$(info OBJECTS = $(OBJECTS))
 	$(info CFLAGS = $(CFLAGS))
 
-$(TARGETDIR)/demo: $(BUILDDIR)/demo.o $(filter $(BUILDDIR)/demo/%,$(OBJECTS))
+$(TARGETDIR)/demo: $(BUILDDIR)/demo.o $(OBJECTS)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ $^
 
