@@ -3,7 +3,7 @@
 
 namespace Demo {
 
-  void hello();
+    void hello();
 }
 
 #endif // DEMO_HELLO_H

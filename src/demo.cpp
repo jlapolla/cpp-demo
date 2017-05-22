@@ -2,7 +2,7 @@
 
 int main() {
 
-  Demo::hello();
-  return 0;
+    Demo::hello();
+    return 0;
 }
 
