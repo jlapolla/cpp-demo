@@ -6,6 +6,7 @@ BUILDDIR := build
 SRCEXT := cpp
 SOURCES := $(shell find src -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
+CFLAGS := -g -Wall
 
 .PHONY: null
 null:
@@ -27,8 +28,9 @@ printvar:
 	$(info SRCEXT = $(SRCEXT))
 	$(info SOURCES = $(SOURCES))
 	$(info OBJECTS = $(OBJECTS))
+	$(info CFLAGS = $(CFLAGS))
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	mkdir -p $(dir $@)
-	$(CC) -c -o $@ $<
+	$(CC) -c -o $@ $(CFLAGS) $<
 
