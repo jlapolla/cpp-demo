@@ -2,6 +2,7 @@ CC := g++
 
 SRCDIR := src
 BUILDDIR := build
+TARGETDIR := bin
 
 SRCEXT := cpp
 SOURCES := $(shell find src -type f -name *.$(SRCEXT))
@@ -15,7 +16,7 @@ null:
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILDDIR)
+	rm -rf $(BUILDDIR) $(TARGETDIR)
 
 .PHONY: object
 object: $(OBJECTS)
@@ -25,12 +26,17 @@ printvar:
 	$(info CC = $(CC))
 	$(info SRCDIR = $(SRCDIR))
 	$(info BUILDDIR = $(BUILDDIR))
+	$(info TARGETDIR = $(TARGETDIR))
 	$(info SRCEXT = $(SRCEXT))
 	$(info SOURCES = $(SOURCES))
 	$(info OBJECTS = $(OBJECTS))
 	$(info CFLAGS = $(CFLAGS))
 
+$(TARGETDIR)/demo: $(filter $(BUILDDIR)/demo/%,$(OBJECTS))
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ $^
+
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	mkdir -p $(dir $@)
-	$(CC) -c -o $@ $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) -o $@ $<
 
