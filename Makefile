@@ -47,7 +47,7 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 # Automatic header file prerequisites
 # See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
 $(BUILDDIR)/%.d: $(SRCDIR)/%.$(SRCEXT)
-	mkdir -p $(dir $@) \
+	@mkdir -p $(dir $@) \
 	  && $(CC) $(CFLAGS) -MM $< 1>$@.$$$$ \
 	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
 	  && rm -f $@.$$$$
