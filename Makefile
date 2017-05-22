@@ -16,6 +16,9 @@ null:
 
 .DEFAULT_GOAL := null
 
+.PHONY: all
+all: $(patsubst $(BUILDDIR)/%.o,$(TARGETDIR)/%,$(MAIN_OBJECTS))
+
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR) $(TARGETDIR)
@@ -36,7 +39,7 @@ printvar:
 	$(info OBJECTS = $(OBJECTS))
 	$(info CFLAGS = $(CFLAGS))
 
-$(TARGETDIR)/demo: $(BUILDDIR)/demo.o $(OBJECTS)
+$(TARGETDIR)/%: $(BUILDDIR)/%.o $(OBJECTS)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ $^
 
