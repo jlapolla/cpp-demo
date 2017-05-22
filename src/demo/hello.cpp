@@ -1,7 +1,10 @@
 #include <iostream>
 
-void hello() {
+namespace Demo {
 
-  std::cout << "Hello World!" << std::endl;
+  void hello() {
+
+    std::cout << "Hello World!" << std::endl;
+  }
 }
 
