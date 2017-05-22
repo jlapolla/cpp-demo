@@ -32,7 +32,7 @@ printvar:
 	$(info OBJECTS = $(OBJECTS))
 	$(info CFLAGS = $(CFLAGS))
 
-$(TARGETDIR)/demo: $(filter $(BUILDDIR)/demo/%,$(OBJECTS))
+$(TARGETDIR)/demo: $(BUILDDIR)/demo.o $(filter $(BUILDDIR)/demo/%,$(OBJECTS))
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ $^
 
