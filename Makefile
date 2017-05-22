@@ -6,7 +6,7 @@ BUILDDIR := build
 SRCEXT := cpp
 SOURCES := $(shell find src -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
-CFLAGS := -g -Wall
+CFLAGS := -std=c++14 -g -Wall
 
 .PHONY: null
 null:
