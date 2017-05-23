@@ -34,6 +34,10 @@ null:
 .PHONY: all
 all: $(patsubst $(BUILDDIR)/%.o,$(TARGETDIR)/%,$(MAIN_OBJECTS))
 
+.PHONY: test
+test: $(patsubst $(BUILDDIR_TEST)/%.o,$(TARGETDIR_TEST)/%,$(MAIN_OBJECTS_TEST))
+	$(TARGETDIR_TEST)/unittest
+
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR) $(TARGETDIR) $(BUILDDIR_TEST) $(TARGETDIR_TEST)
