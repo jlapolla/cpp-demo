@@ -60,3 +60,6 @@ log::size_type log::size() const {
     return messages->size();
 }
 
+log Demo::global_log;
+logger * Demo::global_logger{&global_log};
+

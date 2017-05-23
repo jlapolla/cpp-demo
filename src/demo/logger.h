@@ -13,6 +13,8 @@ namespace Demo {
 
             virtual void push_back(const string & message) = 0;
     };
+
+    extern logger * global_logger;
 }
 
 #endif // DEMO_LOGGER_H

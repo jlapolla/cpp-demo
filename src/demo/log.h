@@ -40,6 +40,8 @@ namespace Demo {
 
             unique_ptr<queue<string>> messages;
     };
+
+    extern log global_log;
 }
 
 #endif // DEMO_LOG_H
