@@ -5,11 +5,26 @@ BUILDDIR := build
 TARGETDIR := bin
 
 SRCEXT := cpp
-MAIN_SOURCES := $(shell find src -maxdepth 1 -type f -name *.$(SRCEXT))
+
+MAIN_SOURCES := $(shell find $(SRCDIR) -maxdepth 1 -type f -name *.$(SRCEXT))
 MAIN_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(MAIN_SOURCES))))
-SOURCES := $(shell find src -mindepth 2 -type f -name *.$(SRCEXT))
+SOURCES := $(shell find $(SRCDIR) -mindepth 2 -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
+
 CFLAGS := -std=c++14 -g -Wall
+LIB :=
+
+SRCDIR_TEST := test
+BUILDDIR_TEST := testbuild
+TARGETDIR_TEST := testbin
+
+MAIN_SOURCES_TEST := $(shell find $(SRCDIR_TEST) -maxdepth 1 -type f -name *.$(SRCEXT))
+MAIN_OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(basename $(MAIN_SOURCES_TEST))))
+SOURCES_TEST := $(shell find $(SRCDIR_TEST) -mindepth 2 -type f -name *.$(SRCEXT))
+OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(basename $(SOURCES_TEST))))
+
+CFLAGS_TEST := $(CFLAGS) -I $(SRCDIR) -I /usr/include/cppunit $(shell cppunit-config --cflags)
+LIB_TEST := $(shell cppunit-config --libs)
 
 .PHONY: null
 null:
@@ -21,7 +36,7 @@ all: $(patsubst $(BUILDDIR)/%.o,$(TARGETDIR)/%,$(MAIN_OBJECTS))
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILDDIR) $(TARGETDIR)
+	rm -rf $(BUILDDIR) $(TARGETDIR) $(BUILDDIR_TEST) $(TARGETDIR_TEST)
 
 .PHONY: object
 object: $(OBJECTS)
@@ -38,10 +53,20 @@ printvar:
 	$(info SOURCES = $(SOURCES))
 	$(info OBJECTS = $(OBJECTS))
 	$(info CFLAGS = $(CFLAGS))
+	$(info LIB = $(LIB))
+	$(info SRCDIR_TEST = $(SRCDIR_TEST))
+	$(info BUILDDIR_TEST = $(BUILDDIR_TEST))
+	$(info TARGETDIR_TEST = $(TARGETDIR_TEST))
+	$(info MAIN_SOURCES_TEST = $(MAIN_SOURCES_TEST))
+	$(info MAIN_OBJECTS_TEST = $(MAIN_OBJECTS_TEST))
+	$(info SOURCES_TEST = $(SOURCES_TEST))
+	$(info OBJECTS_TEST = $(OBJECTS_TEST))
+	$(info CFLAGS_TEST = $(CFLAGS_TEST))
+	$(info LIB_TEST = $(LIB_TEST))
 
 $(TARGETDIR)/%: $(BUILDDIR)/%.o $(OBJECTS)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(LIB) -o $@ $^
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	mkdir -p $(dir $@)
