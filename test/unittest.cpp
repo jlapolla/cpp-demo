@@ -14,11 +14,11 @@ int main() {
 
     // Add the test suite to the list of tests to run
     CppUnit::TextUi::TestRunner runner;
-    runner.addTest(suite.get());
+    runner.addTest(suite.release());
 
     // Change the default outputter
     unique_ptr<CppUnit::CompilerOutputter> outputter = make_unique<CppUnit::CompilerOutputter>(&runner.result(), std::cerr);
-    runner.setOutputter(outputter.get());
+    runner.setOutputter(outputter.release());
 
     // Run tests
     bool success = runner.run();
