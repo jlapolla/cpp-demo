@@ -10,8 +10,11 @@ void log_test::tearDown() {}
 
 void log_test::testShouldFail() {
 
-    CPPUNIT_FAIL("Should fail");
+    CPPUNIT_ASSERT(false);
 }
 
-void log_test::testShouldSucceed() {}
+void log_test::testShouldSucceed() {
+
+    CPPUNIT_ASSERT(true);
+}
 
