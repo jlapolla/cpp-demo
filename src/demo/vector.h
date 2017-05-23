@@ -21,8 +21,8 @@ namespace Demo {
 
             reference operator[](size_type Pos);
             const_reference operator[](size_type Pos) const;
-            vector_fixed & operator=(const vector_fixed & right);
-            vector_fixed & operator=(vector_fixed && right);
+            vector_fixed & operator=(const vector_fixed & Right);
+            vector_fixed & operator=(vector_fixed && Right);
 
             explicit vector_fixed(size_type Count);
             ~vector_fixed();
