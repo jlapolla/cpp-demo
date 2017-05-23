@@ -33,7 +33,7 @@ namespace Demo {
             const_reference front() const;
             void pop();
             void push(const_reference message);
-            void push_back(const_reference message) override;
+            void push_back(const_reference message) override final;
             size_type size() const;
 
         private:
