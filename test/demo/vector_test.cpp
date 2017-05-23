@@ -1,3 +1,6 @@
+#include <memory>
+#include <utility>
+
 #include "demo/log.h"
 #include "demo/vector.h"
 #include "demo/verbose.h"
@@ -49,5 +52,64 @@ void vector_fixed_test::testManagesCopyableType() {
     CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
     global_log.pop();
     CPPUNIT_ASSERT(global_log.empty());
+}
+
+void vector_fixed_test::testManagesUniquePtrType() {
+
+    using std::make_unique;
+    using std::move;
+    using std::unique_ptr;
+
+    unique_ptr<verbose_copy> a{make_unique<verbose_copy>(0)};
+    verbose_copy * py;
+
+    {
+
+        unique_ptr<verbose_copy> x{make_unique<verbose_copy>(1)};
+        unique_ptr<verbose_copy> y{make_unique<verbose_copy>(2)};
+
+        py = y.get();
+
+        global_log.clear();
+
+        vector_fixed<unique_ptr<verbose_copy>> vec{5};
+        // Space allocated, but not initialized
+        CPPUNIT_ASSERT(global_log.empty());
+
+        vec.push_back(move(x));
+        vec.push_back(move(y));
+        // Moved unique_ptr
+        CPPUNIT_ASSERT(global_log.empty());
+
+        a = move(vec[1]);
+        // Destroyed previous contents of 'a'
+        CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
+        global_log.pop();
+        CPPUNIT_ASSERT(global_log.empty());
+
+        vec.pop_back();
+        // Destroyed empty unique_ptr
+        CPPUNIT_ASSERT(global_log.empty());
+
+        vec.push_back(make_unique<verbose_copy>(2));
+        // New object created
+        CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(value_type Val)") == 0);
+        global_log.pop();
+        CPPUNIT_ASSERT(global_log.empty());
+
+        vec.pop_back();
+        // Destroyed unique_ptr and object
+        CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
+        global_log.pop();
+        CPPUNIT_ASSERT(global_log.empty());
+    }
+
+    // Destroyed unique_ptr and object
+    CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
+    global_log.pop();
+    CPPUNIT_ASSERT(global_log.empty());
+
+    CPPUNIT_ASSERT(a->value() == 2);
+    CPPUNIT_ASSERT(a.get() == py);
 }
 
