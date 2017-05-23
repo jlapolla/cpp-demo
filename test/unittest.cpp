@@ -6,6 +6,7 @@
 
 int main() {
 
+    using std::make_unique;
     using std::unique_ptr;
 
     // Get the top level suite from the registry
@@ -16,7 +17,8 @@ int main() {
     runner.addTest(suite.get());
 
     // Change the default outputter to a compiler error format outputter
-    runner.setOutputter( new CppUnit::CompilerOutputter( &runner.result(), std::cerr ) );
+    unique_ptr<CppUnit::CompilerOutputter> outputter = make_unique<CppUnit::CompilerOutputter>(&runner.result(), std::cerr);
+    runner.setOutputter(outputter.get());
 
     // Run the tests.
     bool wasSucessful = runner.run();
