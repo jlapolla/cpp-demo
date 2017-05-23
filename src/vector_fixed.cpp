@@ -2,10 +2,11 @@
 #include <memory>
 #include <utility>
 
+#include "demo/log.h"
 #include "demo/vector.h"
 #include "demo/verbose.h"
 
-int main() {
+void do_main() {
 
     using std::make_unique;
     using std::move;
@@ -20,5 +21,18 @@ int main() {
     unique_ptr<verbose_copy> z = make_unique<verbose_copy>(5);
     vec.push_back(move(x));
     vec.push_back(move(y));
+}
+
+int main() {
+
+    using Demo::global_log;
+
+    do_main();
+
+    while (!global_log.empty()) {
+
+        std::cerr << global_log.front() << std::endl;
+        global_log.pop();
+    }
 }
 
