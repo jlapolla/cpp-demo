@@ -50,6 +50,11 @@ void log::push(log::const_reference message) {
     messages->push(message);
 }
 
+void log::push_back(log::const_reference message) {
+
+    messages->push(message);
+}
+
 log::size_type log::size() const {
 
     return messages->size();

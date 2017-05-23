@@ -5,13 +5,15 @@
 #include <queue>
 #include <string>
 
+#include "logger.h"
+
 namespace Demo {
 
     using std::queue;
     using std::string;
     using std::unique_ptr;
 
-    class log {
+    class log : public logger {
 
         public:
 
@@ -31,6 +33,7 @@ namespace Demo {
             const_reference front() const;
             void pop();
             void push(const_reference message);
+            void push_back(const_reference message) override;
             size_type size() const;
 
         private:
