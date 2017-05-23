@@ -32,7 +32,30 @@ namespace Demo {
             void push_back(const Type & Val);
             void push_back(Type && Val);
             size_type size() const;
+
+        private:
+
+            size_type sz;
+            size_type cap;
     };
+}
+
+template<typename Type, typename Allocator>
+typename Demo::vector_fixed<Type, Allocator>::size_type Demo::vector_fixed<Type, Allocator>::capacity() const {
+
+    return cap;
+}
+
+template<typename Type, typename Allocator>
+bool Demo::vector_fixed<Type, Allocator>::empty() const {
+
+    return sz == 0;
+}
+
+template<typename Type, typename Allocator>
+typename Demo::vector_fixed<Type, Allocator>::size_type Demo::vector_fixed<Type, Allocator>::size() const {
+
+    return sz;
 }
 
 #endif // DEMO_VECTOR_H
