@@ -4,6 +4,7 @@
 
 Demo::verbose_copy & Demo::verbose_copy::operator=(const Demo::verbose_copy & Right) {
 
+    std::cerr << "verbose_copy & operator=(const verbose_copy & Right)" << std::endl;
     val = Right.val;
     return *this;
 }
