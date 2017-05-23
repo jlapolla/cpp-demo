@@ -8,11 +8,6 @@ void log_test::setUp() {}
 
 void log_test::tearDown() {}
 
-void log_test::testShouldFail() {
-
-    CPPUNIT_ASSERT(false);
-}
-
 void log_test::testShouldSucceed() {
 
     CPPUNIT_ASSERT(true);
