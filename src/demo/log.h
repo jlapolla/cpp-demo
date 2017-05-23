@@ -1,6 +1,7 @@
 #ifndef DEMO_LOG_H
 #define DEMO_LOG_H
 
+#include <memory>
 #include <queue>
 #include <string>
 
@@ -8,14 +9,14 @@ namespace Demo {
 
     using std::queue;
     using std::string;
+    using std::unique_ptr;
 
     class log {
 
         public:
 
-            typedef queue<string> container_type;
-            typedef container_type::size_type size_type;
-            typedef container_type::value_type value_type;
+            typedef queue<string>::size_type size_type;
+            typedef queue<string>::value_type value_type;
             typedef const value_type & const_reference;
 
             log & operator=(const log & Right) = delete;
@@ -34,8 +35,8 @@ namespace Demo {
 
         private:
 
-            queue<string> messages;
-    }
+            unique_ptr<queue<string>> messages;
+    };
 }
 
 #endif // DEMO_LOG_H
