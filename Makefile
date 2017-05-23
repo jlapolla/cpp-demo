@@ -24,7 +24,7 @@ SOURCES_TEST := $(shell find $(SRCDIR_TEST) -mindepth 2 -type f -name *.$(SRCEXT
 OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(basename $(SOURCES_TEST))))
 
 CFLAGS_TEST := $(CFLAGS) -I $(SRCDIR) -I /usr/include/cppunit $(shell cppunit-config --cflags)
-LIB_TEST := $(shell cppunit-config --libs)
+LIB_TEST := $(LIB) $(shell cppunit-config --libs)
 
 .PHONY: null
 null:
