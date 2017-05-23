@@ -13,6 +13,7 @@ namespace Demo {
 
             verbose_copy & operator=(const verbose_copy & Right);
 
+            verbose_copy();
             explicit verbose_copy(value_type Val);
             verbose_copy(const verbose_copy & Right);
             ~verbose_copy();

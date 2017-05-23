@@ -10,6 +10,12 @@ verbose_copy & verbose_copy::operator=(const verbose_copy & Right) {
     return *this;
 }
 
+verbose_copy::verbose_copy() {
+
+    global_logger->push_back("verbose_copy()");
+    val = 0;
+}
+
 verbose_copy::verbose_copy(verbose_copy::value_type Val) {
 
     global_logger->push_back("verbose_copy(value_type Val)");
