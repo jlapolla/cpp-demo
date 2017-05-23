@@ -82,3 +82,21 @@ $(BUILDDIR)/%.d: $(SRCDIR)/%.$(SRCEXT)
 
 include $(addsuffix .d,$(basename $(MAIN_OBJECTS) $(OBJECTS)))
 
+$(TARGETDIR_TEST)/%: $(BUILDDIR_TEST)/%.o $(OBJECTS) $(OBJECTS_TEST)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS_TEST) $(LIB_TEST) -o $@ $^
+
+$(BUILDDIR_TEST)/%.o: $(SRCDIR_TEST)/%.$(SRCEXT)
+	mkdir -p $(dir $@)
+	$(CC) -c $(CFLAGS_TEST) -o $@ $<
+
+# Automatic header file prerequisites
+# See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
+$(BUILDDIR_TEST)/%.d: $(SRCDIR_TEST)/%.$(SRCEXT)
+	@mkdir -p $(dir $@) \
+	  && $(CC) $(CFLAGS_TEST) -MM $< 1>$@.$$$$ \
+	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
+	  && rm -f $@.$$$$
+
+include $(addsuffix .d,$(basename $(MAIN_OBJECTS_TEST) $(OBJECTS_TEST)))
+
