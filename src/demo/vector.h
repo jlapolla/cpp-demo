@@ -28,6 +28,7 @@ namespace Demo {
             const_reference back() const;
             size_type capacity() const;
             bool empty() const;
+            bool full() const;
             void pop_back();
             void push_back(const Type & Val);
             void push_back(Type && Val);
@@ -76,6 +77,12 @@ template<typename Type, typename Allocator>
 bool Demo::vector_fixed<Type, Allocator>::empty() const {
 
     return sz == 0;
+}
+
+template<typename Type, typename Allocator>
+bool Demo::vector_fixed<Type, Allocator>::full() const {
+
+    return sz == cap;
 }
 
 template<typename Type, typename Allocator>
