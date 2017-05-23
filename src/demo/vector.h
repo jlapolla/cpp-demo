@@ -38,6 +38,7 @@ namespace Demo {
             size_type sz;
             size_type cap;
             pointer arr;
+            Allocator al;
     };
 }
 
@@ -75,6 +76,27 @@ template<typename Type, typename Allocator>
 bool Demo::vector_fixed<Type, Allocator>::empty() const {
 
     return sz == 0;
+}
+
+template<typename Type, typename Allocator>
+void Demo::vector_fixed<Type, Allocator>::pop_back() {
+
+    al.destroy(arr + (sz - 1));
+    --sz;
+}
+
+template<typename Type, typename Allocator>
+void Demo::vector_fixed<Type, Allocator>::push_back(const Type & Val) {
+
+    al.construct(arr + sz, Val);
+    ++sz;
+}
+
+template<typename Type, typename Allocator>
+void Demo::vector_fixed<Type, Allocator>::push_back(Type && Val) {
+
+    al.construct(arr + sz, Val);
+    ++sz;
 }
 
 template<typename Type, typename Allocator>
