@@ -37,7 +37,32 @@ namespace Demo {
 
             size_type sz;
             size_type cap;
+            pointer arr;
     };
+}
+
+template<typename Type, typename Allocator>
+typename Demo::vector_fixed<Type, Allocator>::reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) {
+
+    return arr[Pos];
+}
+
+template<typename Type, typename Allocator>
+typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) const {
+
+    return arr[Pos];
+}
+
+template<typename Type, typename Allocator>
+typename Demo::vector_fixed<Type, Allocator>::reference Demo::vector_fixed<Type, Allocator>::back() {
+
+    return arr[sz - 1];
+}
+
+template<typename Type, typename Allocator>
+typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed<Type, Allocator>::back() const {
+
+    return arr[sz - 1];
 }
 
 template<typename Type, typename Allocator>
