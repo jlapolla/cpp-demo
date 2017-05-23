@@ -66,7 +66,7 @@ printvar:
 
 $(TARGETDIR)/%: $(BUILDDIR)/%.o $(OBJECTS)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(LIB) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	mkdir -p $(dir $@)
@@ -84,7 +84,7 @@ include $(addsuffix .d,$(basename $(MAIN_OBJECTS) $(OBJECTS)))
 
 $(TARGETDIR_TEST)/%: $(BUILDDIR_TEST)/%.o $(OBJECTS) $(OBJECTS_TEST)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS_TEST) $(LIB_TEST) -o $@ $^
+	$(CC) $(CFLAGS_TEST) -o $@ $^ $(LIB_TEST)
 
 $(BUILDDIR_TEST)/%.o: $(SRCDIR_TEST)/%.$(SRCEXT)
 	mkdir -p $(dir $@)
