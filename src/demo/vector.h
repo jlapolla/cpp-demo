@@ -71,6 +71,10 @@ Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Alloc
 template<typename Type, typename Allocator>
 Demo::vector_fixed<Type, Allocator>::~vector_fixed() {
 
+    while (!empty()) {
+
+        pop_back();
+    }
     al.deallocate(arr, cap);
 }
 

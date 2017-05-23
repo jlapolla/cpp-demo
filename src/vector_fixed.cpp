@@ -8,7 +8,7 @@ int main() {
     using Demo::vector_fixed;
     using Demo::verbose_copy;
 
-    verbose_copy x{3};
-    std::cout << x.value() << std::endl;
+    vector_fixed<verbose_copy> vec{5};
+    vec.push_back(verbose_copy{3});
 }
 
