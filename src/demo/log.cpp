@@ -30,6 +30,14 @@ log::const_reference log::back() const {
     return messages->back();
 }
 
+void log::clear() {
+
+    while (!empty()) {
+
+        pop();
+    }
+}
+
 bool log::empty() const {
 
     return messages->empty();

@@ -29,6 +29,7 @@ namespace Demo {
             log();
 
             const_reference back() const;
+            void clear();
             bool empty() const;
             const_reference front() const;
             void pop();
