@@ -2,6 +2,7 @@
 #define DEMO_VECTOR_H
 
 #include <memory>
+#include <utility>
 
 namespace Demo {
 
@@ -125,7 +126,7 @@ void Demo::vector_fixed<Type, Allocator>::push_back(const Type & Val) {
 template<typename Type, typename Allocator>
 void Demo::vector_fixed<Type, Allocator>::push_back(Type && Val) {
 
-    al.construct(arr + sz, Val);
+    al.construct(arr + sz, std::forward<Type>(Val));
     ++sz;
 }
 
