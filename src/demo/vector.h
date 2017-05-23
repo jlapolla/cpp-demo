@@ -62,6 +62,8 @@ typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed
 template<typename Type, typename Allocator>
 Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Allocator>::size_type Count) {
 
+    // TODO: use member initializer syntax?
+
     arr = al.allocate(Count);
     // TODO: throw on allocate failure
     // TODO: Count == 0 case
