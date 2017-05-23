@@ -24,6 +24,9 @@ namespace Demo {
             vector_fixed & operator=(const vector_fixed & right);
             vector_fixed & operator=(vector_fixed && right);
 
+            explicit vector_fixed(size_type Count);
+            ~vector_fixed();
+
             reference back();
             const_reference back() const;
             size_type capacity() const;
@@ -53,6 +56,22 @@ template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) const {
 
     return arr[Pos];
+}
+
+template<typename Type, typename Allocator>
+Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Allocator>::size_type Count) {
+
+    arr = al.allocate(Count);
+    // TODO: throw on allocate failure
+    // TODO: Count == 0 case
+    sz = static_cast<Demo::vector_fixed<Type, Allocator>::size_type>(0);
+    cap = Count;
+}
+
+template<typename Type, typename Allocator>
+Demo::vector_fixed<Type, Allocator>::~vector_fixed() {
+
+    al.deallocate(arr, cap);
 }
 
 template<typename Type, typename Allocator>
