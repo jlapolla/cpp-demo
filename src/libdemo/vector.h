@@ -106,11 +106,21 @@ Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Alloc
 template<typename Type, typename Allocator>
 Demo::vector_fixed<Type, Allocator>::~vector_fixed() {
 
+    // assert forall i: 0 <= i -> i < sz -> is_valid_object(arr[i])
+    // assert forall i: sz <= i -> i < cap -> ~is_valid_object(arr[i])
+    // assert forall i: 0 <= i -> i < cap -> is_allocated_space(arr + i)
+    // assert 0 <= sz
+    // assert sz <= cap
+
     while (!empty()) {
 
         pop_back();
     }
-    al.deallocate(arr, cap);
+
+    if (cap != 0) {
+
+        al.deallocate(arr, cap);
+    }
 }
 
 template<typename Type, typename Allocator>
