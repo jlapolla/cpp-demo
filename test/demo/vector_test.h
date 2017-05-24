@@ -13,6 +13,7 @@ namespace DemoTest {
         CPPUNIT_TEST(testWorksWithZeroCapacity);
         CPPUNIT_TEST(testSubscriptOperator);
         CPPUNIT_TEST(testFullAndEmpty);
+        CPPUNIT_TEST(testSizeAndCapacity);
         CPPUNIT_TEST_SUITE_END();
 
         public:
@@ -24,6 +25,7 @@ namespace DemoTest {
             void testWorksWithZeroCapacity();
             void testSubscriptOperator();
             void testFullAndEmpty();
+            void testSizeAndCapacity();
     };
 }
 

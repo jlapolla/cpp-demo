@@ -201,3 +201,34 @@ void vector_fixed_test::testFullAndEmpty() {
     CPPUNIT_ASSERT(!vec.full());
 }
 
+void vector_fixed_test::testSizeAndCapacity() {
+
+    vector_fixed<int> vec{3};
+    CPPUNIT_ASSERT(vec.size() == 0);
+    CPPUNIT_ASSERT(vec.capacity() == 3);
+
+    vec.push_back(0);
+    CPPUNIT_ASSERT(vec.size() == 1);
+    CPPUNIT_ASSERT(vec.capacity() == 3);
+
+    vec.push_back(1);
+    CPPUNIT_ASSERT(vec.size() == 2);
+    CPPUNIT_ASSERT(vec.capacity() == 3);
+
+    vec.push_back(2);
+    CPPUNIT_ASSERT(vec.size() == 3);
+    CPPUNIT_ASSERT(vec.capacity() == 3);
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(vec.size() == 2);
+    CPPUNIT_ASSERT(vec.capacity() == 3);
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(vec.size() == 1);
+    CPPUNIT_ASSERT(vec.capacity() == 3);
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(vec.size() == 0);
+    CPPUNIT_ASSERT(vec.capacity() == 3);
+}
+
