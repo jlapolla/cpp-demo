@@ -59,11 +59,17 @@ namespace Demo {
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) {
 
+    // assert 0 <= Pos
+    // assert Pos < sz
+
     return arr[Pos];
 }
 
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) const {
+
+    // assert 0 <= Pos
+    // assert Pos < sz
 
     return arr[Pos];
 }
@@ -126,11 +132,15 @@ Demo::vector_fixed<Type, Allocator>::~vector_fixed() {
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::reference Demo::vector_fixed<Type, Allocator>::back() {
 
+    // assert 0 < sz
+
     return arr[sz - 1];
 }
 
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed<Type, Allocator>::back() const {
+
+    // assert 0 < sz
 
     return arr[sz - 1];
 }
@@ -156,6 +166,8 @@ bool Demo::vector_fixed<Type, Allocator>::full() const {
 template<typename Type, typename Allocator>
 void Demo::vector_fixed<Type, Allocator>::pop_back() {
 
+    // assert 0 < sz
+
     al.destroy(arr + (sz - 1));
     --sz;
 }
@@ -163,12 +175,16 @@ void Demo::vector_fixed<Type, Allocator>::pop_back() {
 template<typename Type, typename Allocator>
 void Demo::vector_fixed<Type, Allocator>::push_back(const Type & Val) {
 
+    // assert sz < cap
+
     al.construct(arr + sz, Val);
     ++sz;
 }
 
 template<typename Type, typename Allocator>
 void Demo::vector_fixed<Type, Allocator>::push_back(Type && Val) {
+
+    // assert sz < cap
 
     al.construct(arr + sz, std::forward<Type>(Val));
     ++sz;
