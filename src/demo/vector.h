@@ -44,6 +44,14 @@ namespace Demo {
             size_type cap;
             pointer arr;
             Allocator al;
+
+        // CLASS INVARIANT
+        //
+        // assert forall i: 0 <= i -> i < sz -> is_valid_object(arr[i])
+        // assert forall i: sz <= i -> i < cap -> ~is_valid_object(arr[i])
+        // assert forall i: 0 <= i -> i < cap -> is_allocated_space(arr + i)
+        // assert 0 <= sz
+        // assert sz <= cap
     };
 }
 
@@ -62,6 +70,8 @@ typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed
 template<typename Type, typename Allocator>
 Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Allocator>::size_type Count) {
 
+    // assert 0 <= Count
+
     // TODO: use member initializer syntax?
 
     arr = al.allocate(Count);
@@ -69,6 +79,13 @@ Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Alloc
     // TODO: Count == 0 case
     sz = static_cast<Demo::vector_fixed<Type, Allocator>::size_type>(0);
     cap = Count;
+
+    // ->
+    // assert forall i: 0 <= i -> i < sz -> is_valid_object(arr[i])
+    // assert forall i: sz <= i -> i < cap -> ~is_valid_object(arr[i])
+    // assert forall i: 0 <= i -> i < cap -> is_allocated_space(arr + i)
+    // assert 0 <= sz
+    // assert sz <= cap
 }
 
 template<typename Type, typename Allocator>
