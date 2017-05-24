@@ -287,6 +287,43 @@ typename Demo::vector<Type, Allocator>::const_reference Demo::vector<Type, Alloc
 }
 
 template<typename Type, typename Allocator>
+Demo::vector<Type, Allocator>::vector() :
+    my_size(static_cast<Demo::vector<Type, Allocator>::size_type>(0)),
+    my_capacity(static_cast<Demo::vector<Type, Allocator>::size_type>(0)),
+    my_array(nullptr)
+{
+
+    // ->
+    // assert forall i: 0 <= i -> i < my_size -> is_valid_object(my_array[i])
+    // assert forall i: my_size <= i -> i < my_capacity -> ~is_valid_object(my_array[i])
+    // assert forall i: 0 <= i -> i < my_capacity -> is_allocated_space(my_array + i)
+    // assert 0 <= my_size
+    // assert my_size <= my_capacity
+    // assert (my_capacity = 0) = (my_array = nullptr)
+}
+
+template<typename Type, typename Allocator>
+Demo::vector<Type, Allocator>::~vector() {
+
+    // assert forall i: 0 <= i -> i < my_size -> is_valid_object(my_array[i])
+    // assert forall i: my_size <= i -> i < my_capacity -> ~is_valid_object(my_array[i])
+    // assert forall i: 0 <= i -> i < my_capacity -> is_allocated_space(my_array + i)
+    // assert 0 <= my_size
+    // assert my_size <= my_capacity
+    // assert (my_capacity = 0) = (my_array = nullptr)
+
+    while (!empty()) {
+
+        pop_back();
+    }
+
+    if (my_capacity != 0) {
+
+        my_allocator.deallocate(my_array, my_capacity);
+    }
+}
+
+template<typename Type, typename Allocator>
 void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
 
     // assert my_size <= NewSize
