@@ -232,3 +232,28 @@ void vector_fixed_test::testSizeAndCapacity() {
     CPPUNIT_ASSERT(vec.capacity() == 3);
 }
 
+void vector_fixed_test::testBack() {
+
+    vector_fixed<int> vec{3};
+
+    vec.push_back(0);
+    CPPUNIT_ASSERT(vec.back() == 0);
+
+    vec.push_back(1);
+    CPPUNIT_ASSERT(vec.back() == 1);
+
+    vec.push_back(2);
+    CPPUNIT_ASSERT(vec.back() == 2);
+
+    vec.back() = 100;
+    CPPUNIT_ASSERT(vec.back() == 100);
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(vec.back() == 1);
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(vec.back() == 0);
+
+    vec.pop_back();
+}
+
