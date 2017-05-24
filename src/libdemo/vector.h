@@ -269,6 +269,24 @@ typename Demo::vector_fixed<Type, Allocator>::size_type Demo::vector_fixed<Type,
 //
 
 template<typename Type, typename Allocator>
+typename Demo::vector<Type, Allocator>::reference Demo::vector<Type, Allocator>::operator[](Demo::vector<Type, Allocator>::size_type Pos) {
+
+    // assert 0 <= Pos
+    // assert Pos < my_size
+
+    return my_array[Pos];
+}
+
+template<typename Type, typename Allocator>
+typename Demo::vector<Type, Allocator>::const_reference Demo::vector<Type, Allocator>::operator[](Demo::vector<Type, Allocator>::size_type Pos) const {
+
+    // assert 0 <= Pos
+    // assert Pos < my_size
+
+    return my_array[Pos];
+}
+
+template<typename Type, typename Allocator>
 void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
 
     // assert my_size <= NewSize
