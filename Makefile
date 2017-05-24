@@ -58,7 +58,7 @@ OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(
 CFLAGS_TEST := $(CFLAGS) -I $(PROJECTDIR) -I /usr/include/cppunit $(shell cppunit-config --cflags)
 LIB_TEST := $(LIB) $(shell cppunit-config --libs)
 
-$(TARGETDIR_TEST)/unittest: $(OBJECTS) $(OBJECTS_TEST)
+$(TARGETDIR_TEST)/main: $(OBJECTS) $(OBJECTS_TEST)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS_TEST) -o $@ $^ $(LIB_TEST)
 
@@ -85,8 +85,8 @@ null:
 all: $(patsubst $(BUILDDIR)/%.o,$(TARGETDIR)/%,$(MAIN_OBJECTS))
 
 .PHONY: test
-test: $(TARGETDIR_TEST)/unittest
-	$(TARGETDIR_TEST)/unittest
+test: $(TARGETDIR_TEST)/main
+	$(TARGETDIR_TEST)/main
 
 .PHONY: clean
 clean:
