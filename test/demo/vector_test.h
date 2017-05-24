@@ -10,6 +10,7 @@ namespace DemoTest {
         CPPUNIT_TEST_SUITE(vector_fixed_test);
         CPPUNIT_TEST(testManagesCopyableType);
         CPPUNIT_TEST(testManagesUniquePtrType);
+        CPPUNIT_TEST(testWorksWithZeroCapacity);
         CPPUNIT_TEST_SUITE_END();
 
         public:
@@ -18,6 +19,7 @@ namespace DemoTest {
             void tearDown();
             void testManagesCopyableType();
             void testManagesUniquePtrType();
+            void testWorksWithZeroCapacity();
     };
 }
 

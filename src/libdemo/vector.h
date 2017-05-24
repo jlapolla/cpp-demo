@@ -73,13 +73,25 @@ Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Alloc
 
     // assert 0 <= Count
 
-    arr = al.allocate(Count, nullptr);
-    if (arr == nullptr) {
+    if (Count != 0) {
 
-        throw std::bad_alloc();
+        // ->
+        // assert 0 < Count
+
+        arr = al.allocate(Count, nullptr);
+        if (arr == nullptr) {
+
+            throw std::bad_alloc();
+        }
+    }
+    else {
+
+        // ->
+        // assert 0 = Count
+
+        arr = nullptr;
     }
 
-    // TODO: Count == 0 case
     sz = static_cast<Demo::vector_fixed<Type, Allocator>::size_type>(0);
     cap = Count;
 

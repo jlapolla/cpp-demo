@@ -144,3 +144,11 @@ void vector_fixed_test::testManagesUniquePtrType() {
     CPPUNIT_ASSERT(a.get() == py);
 }
 
+void vector_fixed_test::testWorksWithZeroCapacity() {
+
+    vector_fixed<int> vec{0};
+
+    CPPUNIT_ASSERT(vec.size() == 0);
+    CPPUNIT_ASSERT(vec.capacity() == 0);
+}
+
