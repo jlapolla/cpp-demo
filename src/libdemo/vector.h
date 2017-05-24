@@ -360,6 +360,16 @@ bool Demo::vector<Type, Allocator>::empty() const {
 }
 
 template<typename Type, typename Allocator>
+void Demo::vector<Type, Allocator>::pop_back() {
+
+    // assert 0 < my_size
+
+    my_allocator.destroy(my_array + (my_size - 1));
+    --my_size;
+    adjust_capacity(my_size);
+}
+
+template<typename Type, typename Allocator>
 void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
 
     // assert my_size <= NewSize
