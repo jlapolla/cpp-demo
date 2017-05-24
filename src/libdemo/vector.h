@@ -106,6 +106,7 @@ namespace Demo {
         // assert forall i: 0 <= i -> i < my_capacity -> is_allocated_space(my_array + i)
         // assert 0 <= my_size
         // assert my_size <= my_capacity
+        // assert (my_capacity = 0) = (my_array = nullptr)
     };
 }
 
@@ -282,6 +283,54 @@ void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator
 
         set_capacity(0);
     }
+}
+
+template<typename Type, typename Allocator>
+void Demo::vector<Type, Allocator>::set_capacity(Demo::vector<Type, Allocator>::size_type NewCapacity) {
+
+    // assert my_size <= NewCapacity
+
+    // Allocate NewArray[NewCapacity]
+
+    pointer NewArray;
+    if (NewCapacity != 0) {
+
+        // ->
+        // assert 0 < NewCapacity
+
+        NewArray = my_allocator.allocate(NewCapacity, my_array);
+        if (NewArray == nullptr) {
+
+            throw std::bad_alloc();
+        }
+    }
+    else {
+
+        // ->
+        // assert 0 = NewCapacity
+
+        NewArray = nullptr;
+    }
+
+    // Move my_array[0:my_size] elements to NewArray
+
+    size_type i = static_cast<size_type>(0);
+    while (i < my_size) {
+
+        my_allocator.contruct(NewArray + i, std::move<Type>(my_array[i]));
+        my_allocator.destroy(my_array + i);
+        ++i;
+    }
+
+    // Deallocate my_array
+
+    if (my_capacity != 0) {
+
+        my_allocator.deallocate(my_array, my_capacity);
+    }
+
+    my_array = NewArray;
+    my_capacity = NewCapacity;
 }
 
 #endif // DEMO_VECTOR_H
