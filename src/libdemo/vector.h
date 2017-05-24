@@ -386,6 +386,12 @@ void Demo::vector<Type, Allocator>::push_back(Type && Val) {
 }
 
 template<typename Type, typename Allocator>
+typename Demo::vector<Type, Allocator>::size_type Demo::vector<Type, Allocator>::size() const {
+
+    return my_size;
+}
+
+template<typename Type, typename Allocator>
 void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
 
     // assert my_size <= NewSize
