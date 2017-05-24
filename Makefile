@@ -2,24 +2,24 @@ CC := g++
 SRCEXT := cpp
 PROJECTDIR := src
 
-SRCDIR_LIBDEMO := libdemo
-BUILDDIR_LIBDEMO := $(PROJECTDIR)/libdemo/obj/Release
+SRCDIR_LIBDEMO := $(PROJECTDIR)/libdemo
+BUILDDIR_LIBDEMO := $(SRCDIR_LIBDEMO)/obj/Release
 BUILDDIR := build
 TARGETDIR := bin
 
-SOURCES := $(shell find $(PROJECTDIR)/$(SRCDIR_LIBDEMO) -type f -name *.$(SRCEXT))
-OBJECTS := $(patsubst $(PROJECTDIR)/$(SRCDIR_LIBDEMO)/%,$(BUILDDIR_LIBDEMO)/%,$(addsuffix .o,$(basename $(SOURCES))))
+SOURCES := $(shell find $(SRCDIR_LIBDEMO) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(SRCDIR_LIBDEMO)/%,$(BUILDDIR_LIBDEMO)/%,$(addsuffix .o,$(basename $(SOURCES))))
 
 CFLAGS := -std=c++14 -g -Wall
 LIB :=
 
-$(BUILDDIR_LIBDEMO)/%.o: $(PROJECTDIR)/$(SRCDIR_LIBDEMO)/%.$(SRCEXT)
+$(BUILDDIR_LIBDEMO)/%.o: $(SRCDIR_LIBDEMO)/%.$(SRCEXT)
 	mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 # Automatic header file prerequisites
 # See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
-$(BUILDDIR_LIBDEMO)/%.d: $(PROJECTDIR)/$(SRCDIR_LIBDEMO)/%.$(SRCEXT)
+$(BUILDDIR_LIBDEMO)/%.d: $(SRCDIR_LIBDEMO)/%.$(SRCEXT)
 	@mkdir -p $(dir $@) \
 	  && $(CC) $(CFLAGS) -MM $< 1>$@.$$$$ \
 	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
