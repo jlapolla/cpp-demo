@@ -43,3 +43,23 @@ verbose_copy::const_reference verbose_copy::value() const {
     return val;
 }
 
+verbose_copy_container::verbose_copy_container() {
+
+    global_logger->push_back("verbose_copy_container()");
+}
+
+verbose_copy_container::~verbose_copy_container() {
+
+    global_logger->push_back("~verbose_copy_container()");
+}
+
+verbose_copy & verbose_copy_container::value() {
+
+    return my_verbose;
+}
+
+const verbose_copy & verbose_copy_container::value() const {
+
+    return my_verbose;
+}
+

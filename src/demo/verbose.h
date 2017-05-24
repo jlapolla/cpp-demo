@@ -25,6 +25,21 @@ namespace Demo {
 
             value_type val;
     };
+
+    class verbose_copy_container {
+
+        public:
+
+            verbose_copy_container();
+            ~verbose_copy_container();
+
+            verbose_copy & value();
+            const verbose_copy & value() const;
+
+        private:
+
+            verbose_copy my_verbose;
+    };
 }
 
 #endif // DEMO_VERBOSE_H
