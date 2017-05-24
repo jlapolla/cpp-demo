@@ -457,7 +457,7 @@ void Demo::vector<Type, Allocator>::set_capacity(Demo::vector<Type, Allocator>::
     size_type i = static_cast<size_type>(0);
     while (i < my_size) {
 
-        my_allocator.contruct(NewArray + i, std::move<Type>(my_array[i]));
+        my_allocator.construct(NewArray + i, my_array[i]);
         my_allocator.destroy(my_array + i);
         ++i;
     }

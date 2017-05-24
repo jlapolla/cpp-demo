@@ -33,12 +33,14 @@ namespace DemoTest {
     class vector_test : public CppUnit::TestFixture {
 
         CPPUNIT_TEST_SUITE(vector_test);
+        CPPUNIT_TEST(testManagesCopyableType);
         CPPUNIT_TEST_SUITE_END();
 
         public:
 
             void setUp();
             void tearDown();
+            void testManagesCopyableType();
     };
 }
 
