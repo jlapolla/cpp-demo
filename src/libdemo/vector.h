@@ -55,6 +55,57 @@ namespace Demo {
         // assert 0 <= my_size
         // assert my_size <= my_capacity
     };
+
+    template<typename Type, typename Allocator = std::allocator<Type>>
+    class vector {
+
+        public:
+
+            typedef Allocator allocator_type;
+            typedef typename Allocator::const_pointer const_pointer;
+            typedef typename Allocator::const_reference const_reference;
+            typedef typename Allocator::difference_type difference_type;
+            typedef typename Allocator::pointer pointer;
+            typedef typename Allocator::reference reference;
+            typedef typename Allocator::size_type size_type;
+            typedef typename Allocator::value_type value_type;
+
+            reference operator[](size_type Pos);
+            const_reference operator[](size_type Pos) const;
+            vector & operator=(const vector & Right);
+            vector & operator=(vector && Right);
+
+            vector();
+            ~vector();
+
+            reference back();
+            const_reference back() const;
+            size_type capacity() const;
+            template<typename... Types> void emplace_back(Types&&... Args);
+            bool empty() const;
+            bool full() const;
+            void pop_back();
+            void push_back(const Type & Val);
+            void push_back(Type && Val);
+            size_type size() const;
+
+        private:
+
+            size_type my_size;
+            size_type my_capacity;
+            pointer my_array;
+            Allocator my_allocator;
+
+            void adjust_capacity(size_type NewSize);
+
+        // CLASS INVARIANT
+        //
+        // assert forall i: 0 <= i -> i < my_size -> is_valid_object(my_array[i])
+        // assert forall i: my_size <= i -> i < my_capacity -> ~is_valid_object(my_array[i])
+        // assert forall i: 0 <= i -> i < my_capacity -> is_allocated_space(my_array + i)
+        // assert 0 <= my_size
+        // assert my_size <= my_capacity
+    };
 }
 
 template<typename Type, typename Allocator>
