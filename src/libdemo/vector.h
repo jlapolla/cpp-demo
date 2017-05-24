@@ -108,6 +108,10 @@ namespace Demo {
     };
 }
 
+//
+// Demo::vector_fixed
+//
+
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) {
 
