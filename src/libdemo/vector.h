@@ -396,15 +396,30 @@ void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator
 
     // assert my_size <= NewSize
 
-    // We want the ratio of NewSize / my_capacity in the interval
-    // [0.25,1.00].
+    // For non-zero NewSize, we want the ratio of NewSize / my_capacity
+    // in the interval [0.25,1.00]. If NewSize is zero, we want
+    // my_capacity to be zero.
+
+    // Note that the lower bound of the interval, 0.25, is approximate.
+    // For example, if my_capacity = 7 and NewSize = 1, then
+    // 'my_capacity / 4' is 1 after truncation, and the capacity is not
+    // reset. This yields an actual ratio of 0.14, which is less than
+    // the desired lower bound of 0.25.
+
     if ((my_capacity < NewSize) || (NewSize < my_capacity / 4)) {
 
         // Ratio of NewSize / my_capacity is outside of desired
         // interval. Adjust ratio to 0.5.
+
         set_capacity(NewSize * 2);
     }
     else if (NewSize == 0 && my_capacity != 0) {
+
+        // This branch is necessary because of truncation when computing
+        // 'my_capacity / 4'. E.g. if NewSize = 0 and my_capacity = 1,
+        // we must set my_capacity to zero, but the previous branch will
+        // not be executed since 'my_capacity / 4' evaluates to zero
+        // after truncation.
 
         set_capacity(0);
     }
