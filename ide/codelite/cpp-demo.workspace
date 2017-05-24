@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="cpp-demo" Database="">
   <Project Name="libdemo" Path="libdemo/libdemo.project" Active="Yes"/>
+  <Project Name="libdemo_test" Path="libdemo_test/libdemo_test.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
       <Project Name="libdemo" ConfigName="Debug"/>
+      <Project Name="libdemo_test" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
       <Project Name="libdemo" ConfigName="Release"/>
+      <Project Name="libdemo_test" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
