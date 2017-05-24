@@ -31,7 +31,7 @@ void vector_fixed_test::testManagesCopyableType() {
         // Temporary object created
         CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(value_type Val)") == 0);
         global_log.pop();
-        // Vector object created
+        // Vector element created
         CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(const verbose_copy & Right)") == 0);
         global_log.pop();
         // Temporary object destroyed
@@ -39,16 +39,29 @@ void vector_fixed_test::testManagesCopyableType() {
         global_log.pop();
         CPPUNIT_ASSERT(global_log.empty());
 
-        vec.push_back(verbose_copy(4));
-        global_log.clear();
+        verbose_copy x{4};
+        // 'x' object created
+        CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(value_type Val)") == 0);
+        global_log.pop();
+        CPPUNIT_ASSERT(global_log.empty());
+
+        vec.push_back(x);
+        // Vector element created
+        CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(const verbose_copy & Right)") == 0);
+        global_log.pop();
+        CPPUNIT_ASSERT(global_log.empty());
+
         vec.pop_back();
-        // Vector object destroyed
+        // Vector element destroyed
         CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
         global_log.pop();
         CPPUNIT_ASSERT(global_log.empty());
     }
 
-    // Vector object destroyed
+    // 'x' object destroyed
+    CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
+    global_log.pop();
+    // 'vec' object destroyed
     CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
     global_log.pop();
     CPPUNIT_ASSERT(global_log.empty());
