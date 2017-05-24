@@ -3,8 +3,6 @@
 
 #include "cppunit/extensions/HelperMacros.h"
 
-#include "demo/log.h"
-
 namespace DemoTest {
 
     class log_test : public CppUnit::TestFixture {
