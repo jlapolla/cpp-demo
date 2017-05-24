@@ -83,7 +83,6 @@ namespace Demo {
             size_type capacity() const;
             template<typename... Types> void emplace_back(Types&&... Args);
             bool empty() const;
-            bool full() const;
             void pop_back();
             void push_back(const Type & Val);
             void push_back(Type && Val);
