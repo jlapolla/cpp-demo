@@ -152,3 +152,21 @@ void vector_fixed_test::testWorksWithZeroCapacity() {
     CPPUNIT_ASSERT(vec.capacity() == 0);
 }
 
+void vector_fixed_test::testSubscriptOperator() {
+
+    vector_fixed<int> vec{5};
+    vec.push_back(0);
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
+
+    CPPUNIT_ASSERT(vec[0] == 0);
+    CPPUNIT_ASSERT(vec[2] == 2);
+    CPPUNIT_ASSERT(vec[4] == 4);
+
+    vec[4] = 100;
+
+    CPPUNIT_ASSERT(vec[4] == 100);
+}
+

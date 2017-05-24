@@ -11,6 +11,7 @@ namespace DemoTest {
         CPPUNIT_TEST(testManagesCopyableType);
         CPPUNIT_TEST(testManagesUniquePtrType);
         CPPUNIT_TEST(testWorksWithZeroCapacity);
+        CPPUNIT_TEST(testSubscriptOperator);
         CPPUNIT_TEST_SUITE_END();
 
         public:
@@ -20,6 +21,7 @@ namespace DemoTest {
             void testManagesCopyableType();
             void testManagesUniquePtrType();
             void testWorksWithZeroCapacity();
+            void testSubscriptOperator();
     };
 }
 
