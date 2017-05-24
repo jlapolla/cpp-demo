@@ -44,6 +44,24 @@ OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(
 CFLAGS_TEST := $(CFLAGS) -I $(PROJECTDIR) -I /usr/include/cppunit $(shell cppunit-config --cflags)
 LIB_TEST := $(LIB) $(shell cppunit-config --libs)
 
+$(TARGETDIR_TEST)/%: $(BUILDDIR_TEST)/%.o $(OBJECTS) $(OBJECTS_TEST)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS_TEST) -o $@ $^ $(LIB_TEST)
+
+$(BUILDDIR_TEST)/%.o: $(SRCDIR_TEST)/%.$(SRCEXT)
+	mkdir -p $(dir $@)
+	$(CC) -c $(CFLAGS_TEST) -o $@ $<
+
+# Automatic header file prerequisites
+# See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
+$(BUILDDIR_TEST)/%.d: $(SRCDIR_TEST)/%.$(SRCEXT)
+	@mkdir -p $(dir $@) \
+	  && $(CC) $(CFLAGS_TEST) -MM $< 1>$@.$$$$ \
+	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
+	  && rm -f $@.$$$$
+
+include $(addsuffix .d,$(basename $(MAIN_OBJECTS_TEST) $(OBJECTS_TEST)))
+
 .PHONY: null
 null:
 
@@ -86,22 +104,4 @@ printvar:
 	$(info OBJECTS_TEST = $(OBJECTS_TEST))
 	$(info CFLAGS_TEST = $(CFLAGS_TEST))
 	$(info LIB_TEST = $(LIB_TEST))
-
-$(TARGETDIR_TEST)/%: $(BUILDDIR_TEST)/%.o $(OBJECTS) $(OBJECTS_TEST)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS_TEST) -o $@ $^ $(LIB_TEST)
-
-$(BUILDDIR_TEST)/%.o: $(SRCDIR_TEST)/%.$(SRCEXT)
-	mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS_TEST) -o $@ $<
-
-# Automatic header file prerequisites
-# See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
-$(BUILDDIR_TEST)/%.d: $(SRCDIR_TEST)/%.$(SRCEXT)
-	@mkdir -p $(dir $@) \
-	  && $(CC) $(CFLAGS_TEST) -MM $< 1>$@.$$$$ \
-	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
-	  && rm -f $@.$$$$
-
-include $(addsuffix .d,$(basename $(MAIN_OBJECTS_TEST) $(OBJECTS_TEST)))
 
