@@ -44,7 +44,7 @@ namespace Demo {
             size_type my_size;
             size_type my_capacity;
             pointer my_array;
-            Allocator al;
+            Allocator my_allocator;
 
         // CLASS INVARIANT
         //
@@ -84,7 +84,7 @@ Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Alloc
         // ->
         // assert 0 < Count
 
-        my_array = al.allocate(Count, nullptr);
+        my_array = my_allocator.allocate(Count, nullptr);
         if (my_array == nullptr) {
 
             throw std::bad_alloc();
@@ -125,7 +125,7 @@ Demo::vector_fixed<Type, Allocator>::~vector_fixed() {
 
     if (my_capacity != 0) {
 
-        al.deallocate(my_array, my_capacity);
+        my_allocator.deallocate(my_array, my_capacity);
     }
 }
 
@@ -168,7 +168,7 @@ void Demo::vector_fixed<Type, Allocator>::pop_back() {
 
     // assert 0 < my_size
 
-    al.destroy(my_array + (my_size - 1));
+    my_allocator.destroy(my_array + (my_size - 1));
     --my_size;
 }
 
@@ -177,7 +177,7 @@ void Demo::vector_fixed<Type, Allocator>::push_back(const Type & Val) {
 
     // assert my_size < my_capacity
 
-    al.construct(my_array + my_size, Val);
+    my_allocator.construct(my_array + my_size, Val);
     ++my_size;
 }
 
@@ -186,7 +186,7 @@ void Demo::vector_fixed<Type, Allocator>::push_back(Type && Val) {
 
     // assert my_size < my_capacity
 
-    al.construct(my_array + my_size, std::forward<Type>(Val));
+    my_allocator.construct(my_array + my_size, std::forward<Type>(Val));
     ++my_size;
 }
 
