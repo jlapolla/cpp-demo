@@ -10,6 +10,10 @@
 using namespace DemoTest;
 using namespace Demo;
 
+//
+// DemoTest::vector_fixed_test
+//
+
 CPPUNIT_TEST_SUITE_REGISTRATION(vector_fixed_test);
 
 void vector_fixed_test::setUp() {
@@ -265,4 +269,17 @@ void vector_fixed_test::testBack() {
 
     vec.pop_back();
 }
+
+//
+// DemoTest::vector_test
+//
+
+CPPUNIT_TEST_SUITE_REGISTRATION(vector_test);
+
+void vector_test::setUp() {
+
+    global_log.clear();
+}
+
+void vector_test::tearDown() {}
 

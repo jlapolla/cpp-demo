@@ -29,6 +29,17 @@ namespace DemoTest {
             void testSizeAndCapacity();
             void testBack();
     };
+
+    class vector_test : public CppUnit::TestFixture {
+
+        CPPUNIT_TEST_SUITE(vector_test);
+        CPPUNIT_TEST_SUITE_END();
+
+        public:
+
+            void setUp();
+            void tearDown();
+    };
 }
 
 #endif // DEMO_VECTOR_TEST_H
