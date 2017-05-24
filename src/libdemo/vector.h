@@ -340,6 +340,12 @@ typename Demo::vector<Type, Allocator>::const_reference Demo::vector<Type, Alloc
 }
 
 template<typename Type, typename Allocator>
+typename Demo::vector<Type, Allocator>::size_type Demo::vector<Type, Allocator>::capacity() const {
+
+    return my_capacity;
+}
+
+template<typename Type, typename Allocator>
 void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
 
     // assert my_size <= NewSize
