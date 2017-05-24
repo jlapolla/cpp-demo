@@ -1,5 +1,6 @@
 CC := g++
 
+PROJECTDIR := src
 SRCDIR := src
 BUILDDIR := build
 TARGETDIR := bin
@@ -23,7 +24,7 @@ MAIN_OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix 
 SOURCES_TEST := $(shell find $(SRCDIR_TEST) -mindepth 2 -type f -name *.$(SRCEXT))
 OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(basename $(SOURCES_TEST))))
 
-CFLAGS_TEST := $(CFLAGS) -I $(SRCDIR) -I /usr/include/cppunit $(shell cppunit-config --cflags)
+CFLAGS_TEST := $(CFLAGS) -I $(PROJECTDIR) -I /usr/include/cppunit $(shell cppunit-config --cflags)
 LIB_TEST := $(LIB) $(shell cppunit-config --libs)
 
 .PHONY: null
@@ -48,6 +49,7 @@ object: $(OBJECTS)
 .PHONY: printvar
 printvar:
 	$(info CC = $(CC))
+	$(info PROJECTDIR = $(PROJECTDIR))
 	$(info SRCDIR = $(SRCDIR))
 	$(info BUILDDIR = $(BUILDDIR))
 	$(info TARGETDIR = $(TARGETDIR))
