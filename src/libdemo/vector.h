@@ -41,18 +41,18 @@ namespace Demo {
 
         private:
 
-            size_type sz;
+            size_type my_size;
             size_type cap;
             pointer arr;
             Allocator al;
 
         // CLASS INVARIANT
         //
-        // assert forall i: 0 <= i -> i < sz -> is_valid_object(arr[i])
-        // assert forall i: sz <= i -> i < cap -> ~is_valid_object(arr[i])
+        // assert forall i: 0 <= i -> i < my_size -> is_valid_object(arr[i])
+        // assert forall i: my_size <= i -> i < cap -> ~is_valid_object(arr[i])
         // assert forall i: 0 <= i -> i < cap -> is_allocated_space(arr + i)
-        // assert 0 <= sz
-        // assert sz <= cap
+        // assert 0 <= my_size
+        // assert my_size <= cap
     };
 }
 
@@ -60,7 +60,7 @@ template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) {
 
     // assert 0 <= Pos
-    // assert Pos < sz
+    // assert Pos < my_size
 
     return arr[Pos];
 }
@@ -69,7 +69,7 @@ template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed<Type, Allocator>::operator[](Demo::vector_fixed<Type, Allocator>::size_type Pos) const {
 
     // assert 0 <= Pos
-    // assert Pos < sz
+    // assert Pos < my_size
 
     return arr[Pos];
 }
@@ -98,25 +98,25 @@ Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Alloc
         arr = nullptr;
     }
 
-    sz = static_cast<Demo::vector_fixed<Type, Allocator>::size_type>(0);
+    my_size = static_cast<Demo::vector_fixed<Type, Allocator>::size_type>(0);
     cap = Count;
 
     // ->
-    // assert forall i: 0 <= i -> i < sz -> is_valid_object(arr[i])
-    // assert forall i: sz <= i -> i < cap -> ~is_valid_object(arr[i])
+    // assert forall i: 0 <= i -> i < my_size -> is_valid_object(arr[i])
+    // assert forall i: my_size <= i -> i < cap -> ~is_valid_object(arr[i])
     // assert forall i: 0 <= i -> i < cap -> is_allocated_space(arr + i)
-    // assert 0 <= sz
-    // assert sz <= cap
+    // assert 0 <= my_size
+    // assert my_size <= cap
 }
 
 template<typename Type, typename Allocator>
 Demo::vector_fixed<Type, Allocator>::~vector_fixed() {
 
-    // assert forall i: 0 <= i -> i < sz -> is_valid_object(arr[i])
-    // assert forall i: sz <= i -> i < cap -> ~is_valid_object(arr[i])
+    // assert forall i: 0 <= i -> i < my_size -> is_valid_object(arr[i])
+    // assert forall i: my_size <= i -> i < cap -> ~is_valid_object(arr[i])
     // assert forall i: 0 <= i -> i < cap -> is_allocated_space(arr + i)
-    // assert 0 <= sz
-    // assert sz <= cap
+    // assert 0 <= my_size
+    // assert my_size <= cap
 
     while (!empty()) {
 
@@ -132,17 +132,17 @@ Demo::vector_fixed<Type, Allocator>::~vector_fixed() {
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::reference Demo::vector_fixed<Type, Allocator>::back() {
 
-    // assert 0 < sz
+    // assert 0 < my_size
 
-    return arr[sz - 1];
+    return arr[my_size - 1];
 }
 
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::const_reference Demo::vector_fixed<Type, Allocator>::back() const {
 
-    // assert 0 < sz
+    // assert 0 < my_size
 
-    return arr[sz - 1];
+    return arr[my_size - 1];
 }
 
 template<typename Type, typename Allocator>
@@ -154,46 +154,46 @@ typename Demo::vector_fixed<Type, Allocator>::size_type Demo::vector_fixed<Type,
 template<typename Type, typename Allocator>
 bool Demo::vector_fixed<Type, Allocator>::empty() const {
 
-    return sz == 0;
+    return my_size == 0;
 }
 
 template<typename Type, typename Allocator>
 bool Demo::vector_fixed<Type, Allocator>::full() const {
 
-    return sz == cap;
+    return my_size == cap;
 }
 
 template<typename Type, typename Allocator>
 void Demo::vector_fixed<Type, Allocator>::pop_back() {
 
-    // assert 0 < sz
+    // assert 0 < my_size
 
-    al.destroy(arr + (sz - 1));
-    --sz;
+    al.destroy(arr + (my_size - 1));
+    --my_size;
 }
 
 template<typename Type, typename Allocator>
 void Demo::vector_fixed<Type, Allocator>::push_back(const Type & Val) {
 
-    // assert sz < cap
+    // assert my_size < cap
 
-    al.construct(arr + sz, Val);
-    ++sz;
+    al.construct(arr + my_size, Val);
+    ++my_size;
 }
 
 template<typename Type, typename Allocator>
 void Demo::vector_fixed<Type, Allocator>::push_back(Type && Val) {
 
-    // assert sz < cap
+    // assert my_size < cap
 
-    al.construct(arr + sz, std::forward<Type>(Val));
-    ++sz;
+    al.construct(arr + my_size, std::forward<Type>(Val));
+    ++my_size;
 }
 
 template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::size_type Demo::vector_fixed<Type, Allocator>::size() const {
 
-    return sz;
+    return my_size;
 }
 
 #endif // DEMO_VECTOR_H
