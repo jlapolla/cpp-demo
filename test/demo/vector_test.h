@@ -12,6 +12,7 @@ namespace DemoTest {
         CPPUNIT_TEST(testManagesUniquePtrType);
         CPPUNIT_TEST(testWorksWithZeroCapacity);
         CPPUNIT_TEST(testSubscriptOperator);
+        CPPUNIT_TEST(testFullAndEmpty);
         CPPUNIT_TEST_SUITE_END();
 
         public:
@@ -22,6 +23,7 @@ namespace DemoTest {
             void testManagesUniquePtrType();
             void testWorksWithZeroCapacity();
             void testSubscriptOperator();
+            void testFullAndEmpty();
     };
 }
 

@@ -170,3 +170,34 @@ void vector_fixed_test::testSubscriptOperator() {
     CPPUNIT_ASSERT(vec[4] == 100);
 }
 
+void vector_fixed_test::testFullAndEmpty() {
+
+    vector_fixed<int> vec{3};
+    CPPUNIT_ASSERT(vec.empty());
+    CPPUNIT_ASSERT(!vec.full());
+
+    vec.push_back(0);
+    CPPUNIT_ASSERT(!vec.empty());
+    CPPUNIT_ASSERT(!vec.full());
+
+    vec.push_back(1);
+    CPPUNIT_ASSERT(!vec.empty());
+    CPPUNIT_ASSERT(!vec.full());
+
+    vec.push_back(2);
+    CPPUNIT_ASSERT(!vec.empty());
+    CPPUNIT_ASSERT(vec.full());
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(!vec.empty());
+    CPPUNIT_ASSERT(!vec.full());
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(!vec.empty());
+    CPPUNIT_ASSERT(!vec.full());
+
+    vec.pop_back();
+    CPPUNIT_ASSERT(vec.empty());
+    CPPUNIT_ASSERT(!vec.full());
+}
+
