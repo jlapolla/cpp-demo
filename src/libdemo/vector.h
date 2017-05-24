@@ -97,6 +97,7 @@ namespace Demo {
             Allocator my_allocator;
 
             void adjust_capacity(size_type NewSize);
+            void set_capacity(size_type NewCapacity);
 
         // CLASS INVARIANT
         //
@@ -260,6 +261,27 @@ template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::size_type Demo::vector_fixed<Type, Allocator>::size() const {
 
     return my_size;
+}
+
+//
+// Demo::vector
+//
+
+template<typename Type, typename Allocator>
+void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
+
+    // We want the ratio of NewSize / my_capacity in the interval
+    // [0.25,1.00].
+    if ((my_capacity < NewSize) || (NewSize < my_capacity / 4)) {
+
+        // Ratio of NewSize / my_capacity is outside of desired
+        // interval. Adjust to center of desired interval.
+        set_capacity(NewSize * 2);
+    }
+    else if (NewSize == 0 && my_capacity != 0) {
+
+        set_capacity(0);
+    }
 }
 
 #endif // DEMO_VECTOR_H
