@@ -26,20 +26,45 @@ namespace Demo {
             value_type val;
     };
 
-    class verbose_copy_container {
+    template<typename Type>
+    class verbose_container {
 
         public:
 
-            verbose_copy_container();
-            ~verbose_copy_container();
+            verbose_container();
+            ~verbose_container();
 
-            verbose_copy & value();
-            const verbose_copy & value() const;
+            Type & value();
+            const Type & value() const;
 
         private:
 
-            verbose_copy my_verbose;
+            Type my_value;
     };
+}
+
+template<typename Type>
+Demo::verbose_container<Type>::verbose_container() {
+
+    global_logger->push_back("verbose_container()");
+}
+
+template<typename Type>
+Demo::verbose_container<Type>::~verbose_container() {
+
+    global_logger->push_back("~verbose_container()");
+}
+
+template<typename Type>
+Type & Demo::verbose_container<Type>::value() {
+
+    return my_value;
+}
+
+template<typename Type>
+const Type & Demo::verbose_container<Type>::value() const {
+
+    return my_value;
 }
 
 #endif // DEMO_VERBOSE_H

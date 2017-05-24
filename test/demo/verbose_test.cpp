@@ -19,17 +19,17 @@ void verbose_copy_container_test::testInitializesMember() {
 
     {
 
-        verbose_copy_container x;
+        verbose_container<verbose_copy> x;
         // Object and member created
         CPPUNIT_ASSERT(global_log.front().compare("verbose_copy()") == 0);
         global_log.pop();
-        CPPUNIT_ASSERT(global_log.front().compare("verbose_copy_container()") == 0);
+        CPPUNIT_ASSERT(global_log.front().compare("verbose_container()") == 0);
         global_log.pop();
         CPPUNIT_ASSERT(global_log.empty());
     }
 
     // Object and member destroyed
-    CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy_container()") == 0);
+    CPPUNIT_ASSERT(global_log.front().compare("~verbose_container()") == 0);
     global_log.pop();
     CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
     global_log.pop();
