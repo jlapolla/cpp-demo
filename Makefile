@@ -1,11 +1,10 @@
 CC := g++
-
+SRCEXT := cpp
 PROJECTDIR := src
+
 SRCDIR := src
 BUILDDIR := build
 TARGETDIR := bin
-
-SRCEXT := cpp
 
 MAIN_SOURCES := $(shell find $(SRCDIR) -maxdepth 1 -type f -name *.$(SRCEXT))
 MAIN_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(MAIN_SOURCES))))
@@ -14,6 +13,24 @@ OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(SOUR
 
 CFLAGS := -std=c++14 -g -Wall
 LIB :=
+
+$(TARGETDIR)/%: $(BUILDDIR)/%.o $(OBJECTS)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	mkdir -p $(dir $@)
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+# Automatic header file prerequisites
+# See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
+$(BUILDDIR)/%.d: $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@) \
+	  && $(CC) $(CFLAGS) -MM $< 1>$@.$$$$ \
+	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
+	  && rm -f $@.$$$$
+
+include $(addsuffix .d,$(basename $(MAIN_OBJECTS) $(OBJECTS)))
 
 SRCDIR_TEST := test
 BUILDDIR_TEST := testbuild
@@ -69,24 +86,6 @@ printvar:
 	$(info OBJECTS_TEST = $(OBJECTS_TEST))
 	$(info CFLAGS_TEST = $(CFLAGS_TEST))
 	$(info LIB_TEST = $(LIB_TEST))
-
-$(TARGETDIR)/%: $(BUILDDIR)/%.o $(OBJECTS)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
-
-$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) -o $@ $<
-
-# Automatic header file prerequisites
-# See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
-$(BUILDDIR)/%.d: $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(dir $@) \
-	  && $(CC) $(CFLAGS) -MM $< 1>$@.$$$$ \
-	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
-	  && rm -f $@.$$$$
-
-include $(addsuffix .d,$(basename $(MAIN_OBJECTS) $(OBJECTS)))
 
 $(TARGETDIR_TEST)/%: $(BUILDDIR_TEST)/%.o $(OBJECTS) $(OBJECTS_TEST)
 	mkdir -p $(dir $@)
