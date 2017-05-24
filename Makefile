@@ -48,11 +48,12 @@ $(BUILDDIR)/%.d: $(PROJECTDIR)/%.$(SRCEXT)
 
 include $(addsuffix .d,$(basename $(MAIN_OBJECTS)))
 
-SRCDIR_TEST := test
+PROJECTDIR_TEST := test
+SRCDIR_TEST := $(PROJECTDIR_TEST)/demo
 BUILDDIR_TEST := testbuild
 TARGETDIR_TEST := testbin
 
-SOURCES_TEST := $(shell find $(SRCDIR_TEST) -mindepth 2 -type f -name *.$(SRCEXT))
+SOURCES_TEST := $(shell find $(SRCDIR_TEST) -type f -name *.$(SRCEXT))
 OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(basename $(SOURCES_TEST))))
 
 CFLAGS_TEST := $(CFLAGS) -I $(PROJECTDIR) -I /usr/include/cppunit $(shell cppunit-config --cflags)
