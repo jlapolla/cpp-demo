@@ -32,6 +32,7 @@ namespace Demo {
             reference back();
             const_reference back() const;
             size_type capacity() const;
+            template<typename... Types> void emplace_back(Types&&... Args);
             bool empty() const;
             bool full() const;
             void pop_back();
@@ -149,6 +150,16 @@ template<typename Type, typename Allocator>
 typename Demo::vector_fixed<Type, Allocator>::size_type Demo::vector_fixed<Type, Allocator>::capacity() const {
 
     return my_capacity;
+}
+
+template<typename Type, typename Allocator>
+template<typename... Types>
+void Demo::vector_fixed<Type, Allocator>::emplace_back(Types&&... Args) {
+
+    // assert my_size < my_capacity
+
+    my_allocator.construct(my_array + my_size, std::forward<Types>(Args)...);
+    ++my_size;
 }
 
 template<typename Type, typename Allocator>

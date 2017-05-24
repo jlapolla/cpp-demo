@@ -39,6 +39,12 @@ void vector_fixed_test::testManagesCopyableType() {
         global_log.pop();
         CPPUNIT_ASSERT(global_log.empty());
 
+        vec.emplace_back(3);
+        // Vector element created
+        CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(value_type Val)") == 0);
+        global_log.pop();
+        CPPUNIT_ASSERT(global_log.empty());
+
         const verbose_copy x{4};
         // 'x' object created
         CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(value_type Val)") == 0);
@@ -74,6 +80,9 @@ void vector_fixed_test::testManagesCopyableType() {
     CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
     global_log.pop();
     // 'x' object destroyed
+    CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
+    global_log.pop();
+    // 'vec' object destroyed
     CPPUNIT_ASSERT(global_log.front().compare("~verbose_copy()") == 0);
     global_log.pop();
     // 'vec' object destroyed
