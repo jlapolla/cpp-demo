@@ -370,6 +370,22 @@ void Demo::vector<Type, Allocator>::pop_back() {
 }
 
 template<typename Type, typename Allocator>
+void Demo::vector<Type, Allocator>::push_back(const Type & Val) {
+
+    adjust_capacity(my_size + 1);
+    my_allocator.construct(my_array + my_size, Val);
+    ++my_size;
+}
+
+template<typename Type, typename Allocator>
+void Demo::vector<Type, Allocator>::push_back(Type && Val) {
+
+    adjust_capacity(my_size + 1);
+    my_allocator.construct(my_array + my_size, std::forward<Type>(Val));
+    ++my_size;
+}
+
+template<typename Type, typename Allocator>
 void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
 
     // assert my_size <= NewSize
