@@ -39,7 +39,7 @@ void vector_fixed_test::testManagesCopyableType() {
         global_log.pop();
         CPPUNIT_ASSERT(global_log.empty());
 
-        verbose_copy x{4};
+        const verbose_copy x{4};
         // 'x' object created
         CPPUNIT_ASSERT(global_log.front().compare("verbose_copy(value_type Val)") == 0);
         global_log.pop();
