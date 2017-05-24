@@ -1,5 +1,5 @@
-#include "demo/log.h"
-#include "demo/verbose.h"
+#include "libdemo/log.h"
+#include "libdemo/verbose.h"
 
 #include "verbose_test.h"
 

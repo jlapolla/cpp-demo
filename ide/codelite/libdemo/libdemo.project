@@ -84,15 +84,15 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
-    <VirtualDirectory Name="demo">
-      <File Name="../../../src/demo/hello.cpp"/>
-      <File Name="../../../src/demo/hello.h"/>
-      <File Name="../../../src/demo/log.cpp"/>
-      <File Name="../../../src/demo/log.h"/>
-      <File Name="../../../src/demo/logger.h"/>
-      <File Name="../../../src/demo/vector.h"/>
-      <File Name="../../../src/demo/verbose.cpp"/>
-      <File Name="../../../src/demo/verbose.h"/>
+    <VirtualDirectory Name="libdemo">
+      <File Name="../../../src/libdemo/hello.cpp"/>
+      <File Name="../../../src/libdemo/hello.h"/>
+      <File Name="../../../src/libdemo/log.cpp"/>
+      <File Name="../../../src/libdemo/log.h"/>
+      <File Name="../../../src/libdemo/logger.h"/>
+      <File Name="../../../src/libdemo/vector.h"/>
+      <File Name="../../../src/libdemo/verbose.cpp"/>
+      <File Name="../../../src/libdemo/verbose.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
 </CodeLite_Project>

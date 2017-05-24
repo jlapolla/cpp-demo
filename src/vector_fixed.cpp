@@ -2,9 +2,9 @@
 #include <memory>
 #include <utility>
 
-#include "demo/log.h"
-#include "demo/vector.h"
-#include "demo/verbose.h"
+#include "libdemo/log.h"
+#include "libdemo/vector.h"
+#include "libdemo/verbose.h"
 
 void do_main() {
 

@@ -2,35 +2,50 @@ CC := g++
 SRCEXT := cpp
 PROJECTDIR := src
 
-SRCDIR := src
+SRCDIR := libdemo
 BUILDDIR := build
 TARGETDIR := bin
 
-MAIN_SOURCES := $(shell find $(SRCDIR) -maxdepth 1 -type f -name *.$(SRCEXT))
-MAIN_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(MAIN_SOURCES))))
-SOURCES := $(shell find $(SRCDIR) -mindepth 2 -type f -name *.$(SRCEXT))
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
+SOURCES := $(shell find $(PROJECTDIR)/$(SRCDIR) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(PROJECTDIR)/$(SRCDIR)/%,$(BUILDDIR)/$(SRCDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
 
 CFLAGS := -std=c++14 -g -Wall
 LIB :=
 
-$(TARGETDIR)/%: $(BUILDDIR)/%.o $(OBJECTS)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
-
-$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+$(BUILDDIR)/$(SRCDIR)/%.o: $(PROJECTDIR)/$(SRCDIR)/%.$(SRCEXT)
 	mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 # Automatic header file prerequisites
 # See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
-$(BUILDDIR)/%.d: $(SRCDIR)/%.$(SRCEXT)
+$(BUILDDIR)/$(SRCDIR)/%.d: $(PROJECTDIR)/$(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@) \
 	  && $(CC) $(CFLAGS) -MM $< 1>$@.$$$$ \
 	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
 	  && rm -f $@.$$$$
 
-include $(addsuffix .d,$(basename $(MAIN_OBJECTS) $(OBJECTS)))
+include $(addsuffix .d,$(basename $(OBJECTS)))
+
+MAIN_SOURCES := $(shell find $(PROJECTDIR) -maxdepth 1 -type f -name *.$(SRCEXT))
+MAIN_OBJECTS := $(patsubst $(PROJECTDIR)/%,$(BUILDDIR)/%,$(addsuffix .o,$(basename $(MAIN_SOURCES))))
+
+$(TARGETDIR)/%: $(BUILDDIR)/%.o $(OBJECTS)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
+
+$(BUILDDIR)/%.o: $(PROJECTDIR)/%.$(SRCEXT)
+	mkdir -p $(dir $@)
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+# Automatic header file prerequisites
+# See https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
+$(BUILDDIR)/%.d: $(PROJECTDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@) \
+	  && $(CC) $(CFLAGS) -MM $< 1>$@.$$$$ \
+	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
+	  && rm -f $@.$$$$
+
+include $(addsuffix .d,$(basename $(MAIN_OBJECTS)))
 
 SRCDIR_TEST := test
 BUILDDIR_TEST := testbuild
