@@ -52,8 +52,6 @@ SRCDIR_TEST := test
 BUILDDIR_TEST := testbuild
 TARGETDIR_TEST := testbin
 
-MAIN_SOURCES_TEST := $(shell find $(SRCDIR_TEST) -maxdepth 1 -type f -name *.$(SRCEXT))
-MAIN_OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(basename $(MAIN_SOURCES_TEST))))
 SOURCES_TEST := $(shell find $(SRCDIR_TEST) -mindepth 2 -type f -name *.$(SRCEXT))
 OBJECTS_TEST := $(patsubst $(SRCDIR_TEST)/%,$(BUILDDIR_TEST)/%,$(addsuffix .o,$(basename $(SOURCES_TEST))))
 
@@ -76,7 +74,7 @@ $(BUILDDIR_TEST)/%.d: $(SRCDIR_TEST)/%.$(SRCEXT)
 	  && sed 's,\($(notdir $(basename $@))\)\.o[ :]*,$(dir $@)\1.o $@ : ,g' 0<$@.$$$$ 1>$@ \
 	  && rm -f $@.$$$$
 
-include $(addsuffix .d,$(basename $(MAIN_OBJECTS_TEST) $(OBJECTS_TEST)))
+include $(addsuffix .d,$(basename $(OBJECTS_TEST)))
 
 .PHONY: null
 null:
@@ -115,8 +113,6 @@ printvar:
 	$(info SRCDIR_TEST = $(SRCDIR_TEST))
 	$(info BUILDDIR_TEST = $(BUILDDIR_TEST))
 	$(info TARGETDIR_TEST = $(TARGETDIR_TEST))
-	$(info MAIN_SOURCES_TEST = $(MAIN_SOURCES_TEST))
-	$(info MAIN_OBJECTS_TEST = $(MAIN_OBJECTS_TEST))
 	$(info SOURCES_TEST = $(SOURCES_TEST))
 	$(info OBJECTS_TEST = $(OBJECTS_TEST))
 	$(info CFLAGS_TEST = $(CFLAGS_TEST))
