@@ -6,12 +6,12 @@
     <VirtualDirectory Name="demo">
       <File Name="../../../test/demo/log_test.cpp"/>
       <File Name="../../../test/demo/log_test.h"/>
+      <File Name="../../../test/demo/unittest.cpp"/>
       <File Name="../../../test/demo/vector_test.cpp"/>
       <File Name="../../../test/demo/vector_test.h"/>
       <File Name="../../../test/demo/verbose_test.cpp"/>
       <File Name="../../../test/demo/verbose_test.h"/>
     </VirtualDirectory>
-    <File Name="../../../test/unittest.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug">
     <Project Name="libdemo"/>
