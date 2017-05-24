@@ -74,7 +74,7 @@ Demo::vector_fixed<Type, Allocator>::vector_fixed(Demo::vector_fixed<Type, Alloc
 
     // TODO: use member initializer syntax?
 
-    arr = al.allocate(Count);
+    arr = al.allocate(Count, nullptr);
     // TODO: throw on allocate failure
     // TODO: Count == 0 case
     sz = static_cast<Demo::vector_fixed<Type, Allocator>::size_type>(0);
