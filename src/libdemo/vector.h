@@ -346,6 +346,15 @@ typename Demo::vector<Type, Allocator>::size_type Demo::vector<Type, Allocator>:
 }
 
 template<typename Type, typename Allocator>
+template<typename... Types>
+void Demo::vector<Type, Allocator>::emplace_back(Types&&... Args) {
+
+    adjust_capacity(my_size + 1);
+    my_allocator.construct(my_array + my_size, std::forward<Types>(Args)...);
+    ++my_size;
+}
+
+template<typename Type, typename Allocator>
 void Demo::vector<Type, Allocator>::adjust_capacity(Demo::vector<Type, Allocator>::size_type NewSize) {
 
     // assert my_size <= NewSize
